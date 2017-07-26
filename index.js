@@ -31,7 +31,7 @@ server.route({
             console.log(text)
             var obj = {
                 someAttribute: true,
-                name: text
+                name: text.text
             };
             dbRef.push(obj);
             reply("successfully")
