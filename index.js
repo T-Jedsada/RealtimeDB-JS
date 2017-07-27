@@ -17,14 +17,14 @@ var dbRef = defaultDatabase.ref('/chat')
 const server = new Hapi.Server();
 
 server.connection({
-    port: process.env.PORT || 5000
+    port: process.env.PORT || 3000
 });
 
 server.route({
-    method: 'GET',
-    path: '/{name}',
+    method: 'POST',
+    path: '/api',
     handler: function (request, reply) {
-        translate.getText(request.params.name, {
+        translate.getText(request.payload.word, {
             to: 'th'
         }).then(function (text) {
             console.log(text)
