@@ -21,6 +21,19 @@ server.connection({
     port: process.env.PORT || 3000
 });
 
+var numUsers = 0;
+
+var io = require("socket.io")(server.listener)
+
+io.on('connection', function (socket) {
+    var addedUser = false;
+    // when the client emits 'new message', this listens and executes
+    socket.on('new message', function (data) {
+        // we tell the client to execute 'new message'
+        console.log(data)
+    });
+});
+
 server.route({
     method: 'POST',
     path: '/api',
