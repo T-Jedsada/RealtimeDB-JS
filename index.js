@@ -1,6 +1,7 @@
 const translate = require('translate-api');
 const firebase = require("firebase");
-const Hapi = require('hapi');
+const hapi = require('hapi');
+const boom = require('boom')
 
 var config = {
     apiKey: "AIzaSyBbILHVxVIcPg_B3pA-dLxo9GFVN2catj8",
@@ -14,7 +15,7 @@ firebase.initializeApp(config);
 var defaultDatabase = firebase.database();
 var dbRef = defaultDatabase.ref('/chat')
 
-const server = new Hapi.Server();
+const server = new hapi.Server();
 
 server.connection({
     port: process.env.PORT || 3000
@@ -33,7 +34,11 @@ server.route({
                 name: text.text
             };
             dbRef.push(obj);
-            reply("successfully")
+            reply({
+                message: "successfully"
+            })
+        }).catch(function (err) {
+            reply(boom.notFound('error'))
         });
     }
 });
