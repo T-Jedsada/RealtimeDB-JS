@@ -17,8 +17,7 @@ var dbRef = defaultDatabase.ref('/chat')
 const server = new Hapi.Server();
 
 server.connection({
-    port: 3000,
-    host: 'localhost'
+    port: process.env.PORT || 5000
 });
 
 server.route({
