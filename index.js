@@ -10,6 +10,10 @@ const config = {
     storageBucket: "gs://example-everything.appspot.com",
 };
 
+
+
+
+
 firebase.initializeApp(config);
 
 const defaultDatabase = firebase.database();
