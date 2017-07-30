@@ -44,7 +44,7 @@ server.route({
     method: 'POST',
     path: '/api',
     handler: function (request, reply) {
-        translateWord(request.payload.word).then(function (text) {
+        translateWord(request.payload.word, request.payload.destination).then(function (text) {
             console.log(text)
             var obj = {
                 someAttribute: true,
@@ -65,8 +65,8 @@ server.start((err) => {
     console.log(`Server running at: ${server.info.uri}`);
 });
 
-function translateWord(word) {
+function translateWord(word, destination) {
     return translate.getText(word, {
-        to: 'th'
+        to: destination
     })
 }
