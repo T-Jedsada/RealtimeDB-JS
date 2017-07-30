@@ -52,7 +52,7 @@ server.route({
             };
             dbRef.push(obj);
             reply({
-                message: "successfully"
+                success: true
             })
         }).catch(function (err) {
             reply(boom.notFound('error'))
