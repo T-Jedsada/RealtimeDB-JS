@@ -29,7 +29,7 @@ io.on('connection', function (socket) {
         let obj = JSON.parse(data)
         translateWord(obj.text, obj.target).then(function (result) {
             var obj = {
-                name: result.text
+                text: result.text
             };
             dbRef.push(obj);
         }).catch(function (err) {
