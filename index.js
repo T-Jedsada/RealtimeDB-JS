@@ -26,9 +26,7 @@ const io = require("socket.io")(server.listener)
 io.on('connection', function (socket) {
     console.log('a user connected');
     socket.on('send', function (data) {
-        console.log(data)
         translateWord(data).then(function (text) {
-            console.log(text)
             var obj = {
                 someAttribute: true,
                 name: text.text
@@ -42,20 +40,14 @@ io.on('connection', function (socket) {
 
 server.route({
     method: 'POST',
-    path: '/api',
+    path: '/api/translate',
     handler: function (request, reply) {
-        translateWord(request.payload.word, request.payload.destination).then(function (text) {
-            console.log(text)
-            var obj = {
-                someAttribute: true,
-                name: text.text
-            };
-            dbRef.push(obj);
-            reply({
-                success: true
-            })
+        const word = request.payload.word
+        const destination = request.payload.destination
+        translateWord(word, destination).then(function (result) {
+            sendDataToDB(reply, result.text)
         }).catch(function (err) {
-            reply(boom.notFound('error'))
+            sendDataToDB(reply, word)
         });
     }
 });
@@ -68,5 +60,15 @@ server.start((err) => {
 function translateWord(word, destination) {
     return translate.getText(word, {
         to: destination
+    })
+}
+
+function sendDataToDB(reply, word) {
+    var obj = {
+        name: word
+    };
+    dbRef.push(obj);
+    reply({
+        success: true
     })
 }
