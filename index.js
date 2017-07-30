@@ -26,9 +26,10 @@ const io = require("socket.io")(server.listener)
 io.on('connection', function (socket) {
     console.log('a user connected');
     socket.on('new message', function (data) {
+        let dataObj = JSON.parse(data)
         console.log(data)
-        console.log(data.text)
-        console.log(data.target)
+        console.log(dataObj.text)
+        console.log(dataObj.target)
         translateWord(data.text, data.target).then(function (result) {
             var obj = {
                 name: result.text
