@@ -26,16 +26,14 @@ const io = require("socket.io")(server.listener)
 io.on('connection', function (socket) {
     console.log('a user connected');
     socket.on('new message', function (data) {
-        console.log(data)
-        // translateWord(data).then(function (text) {
-        //     var obj = {
-        //         someAttribute: true,
-        //         name: text.text
-        //     };
-        //     dbRef.push(obj);
-        // }).catch(function (err) {
+        translateWord(data.text, data.target).then(function (result) {
+            var obj = {
+                name: result.text
+            };
+            dbRef.push(obj);
+        }).catch(function (err) {
 
-        // });
+        });
     });
 });
 
