@@ -26,15 +26,16 @@ const io = require("socket.io")(server.listener)
 io.on('connection', function (socket) {
     console.log('a user connected');
     socket.on('new message', function (data) {
-        translateWord(data).then(function (text) {
-            var obj = {
-                someAttribute: true,
-                name: text.text
-            };
-            dbRef.push(obj);
-        }).catch(function (err) {
+        console.log(data)
+        // translateWord(data).then(function (text) {
+        //     var obj = {
+        //         someAttribute: true,
+        //         name: text.text
+        //     };
+        //     dbRef.push(obj);
+        // }).catch(function (err) {
 
-        });
+        // });
     });
 });
 
@@ -43,8 +44,8 @@ server.route({
     path: '/api/translate',
     handler: function (request, reply) {
         const word = request.payload.word
-        const destination = request.payload.destination
-        translateWord(word, destination).then(function (result) {
+        const target = request.payload.target
+        translateWord(word, target).then(function (result) {
             sendDataToDB(reply, result.text)
         }).catch(function (err) {
             sendDataToDB(reply, word)
@@ -57,9 +58,9 @@ server.start((err) => {
     console.log(`Server running at: ${server.info.uri}`);
 });
 
-function translateWord(word, destination) {
+function translateWord(word, target) {
     return translate.getText(word, {
-        to: destination
+        to: target
     })
 }
 
