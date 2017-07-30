@@ -65,7 +65,7 @@ function translateWord(word, destination) {
 
 function sendDataToDB(reply, word) {
     var obj = {
-        name: word
+        text: word
     };
     dbRef.push(obj);
     reply({
