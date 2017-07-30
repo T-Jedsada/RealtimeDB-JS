@@ -26,6 +26,7 @@ const io = require("socket.io")(server.listener)
 io.on('connection', function (socket) {
     console.log('a user connected');
     socket.on('new message', function (data) {
+        console.log(data)
         console.log(data.text)
         console.log(data.target)
         translateWord(data.text, data.target).then(function (result) {
